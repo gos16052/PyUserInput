@@ -77,6 +77,8 @@ in Windows. This feature is only available on Mac.')
     def position(self):
         pt = POINT()
         windll.user32.GetCursorPos(byref(pt))
+        x = -((~pt.x & (0xFFFFFFFF)) + 1) if pt.x & (1 << 31) else pt.x
+        y = -((~pt.y & (0xFFFFFFFF)) + 1) if pt.y & (1 << 31) else pt.y
         return pt.x, pt.y
 
     def screen_size(self):
